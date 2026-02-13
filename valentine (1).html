@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💕 Joyeuse Saint-Valentin 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--rose-deep:#b5002a;--rose-hot:#e6003a;--rose-soft:#ff4d6d;--rose-blush:#ff8fa3;--rose-light:#ffb3c1;--rose-pale:#ffd6e0;--cream:#fff0f3;--gold:#d4a017;--gold-light:#f0d060;--wine:#6b0020}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:radial-gradient(ellipse at 30% 20%,#2a0010 0%,#1a0008 40%,#0d0004 100%);min-height:100vh;overflow-x:hidden;font-family:'Lora',serif;color:var(--cream);cursor:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><text y='20' font-size='20'>💗</text></svg>") 12 12,auto}
+
+/* LANDING */
+#landingPage{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:2rem;position:relative;z-index:20}
+
+/* ENVELOPE */
+.envelope-wrap{position:relative;width:clamp(260px,70vw,380px);height:clamp(180px,45vw,260px);margin-bottom:2rem;cursor:pointer;perspective:800px}
+.envelope{position:relative;width:100%;height:100%;transition:transform .3s ease}
+.envelope-wrap:hover .envelope{transform:translateY(-5px)}
+.envelope-body{width:100%;height:100%;background:linear-gradient(145deg,#c2185b,#880e4f);border-radius:8px;position:relative;box-shadow:0 15px 50px rgba(136,14,79,.4);overflow:hidden}
+.envelope-body::before{content:'';position:absolute;inset:6px;border:1px dashed rgba(255,179,193,.2);border-radius:4px}
+.envelope-inner-shadow{position:absolute;bottom:0;left:0;width:100%;height:60%;background:linear-gradient(to top,rgba(0,0,0,.15),transparent)}
+.envelope-flap{position:absolute;top:0;left:0;width:100%;height:55%;background:linear-gradient(165deg,#e91e63,#c2185b);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;transition:transform 1.2s cubic-bezier(.4,0,.2,1);z-index:3;border-radius:8px 8px 0 0}
+.envelope-wrap.opening .envelope-flap{transform:rotateX(180deg)}
+.envelope-heart{position:absolute;top:35%;left:50%;transform:translate(-50%,-50%);font-size:3rem;z-index:4;animation:megaBeat 1.2s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(255,77,109,.6))}
+.envelope-letter{position:absolute;top:20%;left:10%;width:80%;height:60%;background:linear-gradient(135deg,#fff5f7,#ffe0e6);border-radius:4px;z-index:2;transform:translateY(0);transition:transform 1s cubic-bezier(.4,0,.2,1) .4s;display:flex;align-items:center;justify-content:center;padding:1rem;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.envelope-wrap.opening .envelope-letter{transform:translateY(-75%)}
+.envelope-letter-text{font-family:'Great Vibes',cursive;color:#880e4f;font-size:clamp(1rem,3vw,1.4rem);text-align:center;line-height:1.6}
+.envelope-seal{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);width:40px;height:40px;background:var(--gold);border-radius:50%;z-index:5;display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 2px 10px rgba(212,160,23,.4)}
+
+.landing-title{font-family:'Great Vibes',cursive;font-size:clamp(2.5rem,8vw,5rem);background:linear-gradient(135deg,var(--rose-light),var(--gold-light),var(--rose-blush));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin-bottom:.5rem;animation:titleShimmer 4s ease-in-out infinite}
+.landing-subtitle{font-family:'Playfair Display',serif;font-style:italic;color:var(--rose-blush);font-size:clamp(.9rem,2.5vw,1.2rem);text-align:center;margin-bottom:3rem;letter-spacing:1px;opacity:.8}
+.name-form{display:flex;flex-direction:column;align-items:center;gap:1.5rem;width:100%;max-width:450px;opacity:0;transform:translateY(20px);transition:all .8s ease .6s}
+.name-form.visible{opacity:1;transform:translateY(0)}
+.name-label{font-family:'Lora',serif;font-size:1.1rem;color:var(--rose-pale);text-align:center}
+.name-input{width:100%;padding:1rem 1.5rem;font-family:'Great Vibes',cursive;font-size:2rem;text-align:center;background:rgba(255,77,109,.08);border:2px solid rgba(255,77,109,.3);border-radius:50px;color:var(--cream);outline:none;transition:all .4s ease;backdrop-filter:blur(10px)}
+.name-input::placeholder{color:rgba(255,179,193,.4);font-family:'Great Vibes',cursive}
+.name-input:focus{border-color:var(--rose-soft);box-shadow:0 0 30px rgba(230,0,58,.3),inset 0 0 20px rgba(255,77,109,.05)}
+.submit-btn{padding:1rem 3rem;font-family:'Playfair Display',serif;font-size:1.1rem;letter-spacing:2px;background:linear-gradient(135deg,var(--rose-hot),var(--rose-deep));color:#fff;border:none;border-radius:50px;cursor:pointer;transition:all .4s ease;position:relative;overflow:hidden;text-transform:uppercase}
+.submit-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .6s ease}
+.submit-btn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 15px 40px rgba(230,0,58,.4)}
+.submit-btn:hover::before{left:100%}
+.submit-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.landing-petals{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+
+/* MUSIC BUTTON */
+.music-btn{position:fixed;top:20px;right:20px;z-index:1000;width:48px;height:48px;border-radius:50%;background:rgba(181,0,42,.3);border:1.5px solid rgba(255,77,109,.3);backdrop-filter:blur(10px);color:var(--cream);font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s ease;opacity:0;animation:fadeInUp .5s ease-out 1s forwards}
+.music-btn:hover{background:rgba(181,0,42,.5);transform:scale(1.1);box-shadow:0 4px 20px rgba(230,0,58,.3)}
+.music-btn .bar{display:inline-block;width:3px;margin:0 1.5px;background:var(--cream);border-radius:2px;animation:musicBar .8s ease-in-out infinite alternate}
+.music-btn .bar:nth-child(1){height:8px;animation-delay:0s}
+.music-btn .bar:nth-child(2){height:14px;animation-delay:.2s}
+.music-btn .bar:nth-child(3){height:10px;animation-delay:.4s}
+.music-btn .bar:nth-child(4){height:16px;animation-delay:.1s}
+.music-btn.muted .bar{animation:none !important;height:4px !important}
+@keyframes musicBar{0%{height:4px}100%{height:18px}}
+
+/* CONFETTI BUTTON */
+.confetti-btn{position:fixed;bottom:25px;right:20px;z-index:1000;padding:.8rem 1.5rem;border-radius:50px;background:linear-gradient(135deg,var(--gold),#e6b800);border:none;color:#1a0008;font-family:'Playfair Display',serif;font-size:.9rem;font-weight:bold;letter-spacing:1px;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 15px rgba(212,160,23,.3);opacity:0;animation:fadeInUp .5s ease-out 1.5s forwards}
+.confetti-btn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 8px 30px rgba(212,160,23,.5)}
+.confetti-btn:active{transform:scale(.95)}
+.confetti-piece{position:fixed;pointer-events:none;z-index:999;animation:confettiFall var(--cfall,3s) ease-out forwards}
+@keyframes confettiFall{0%{opacity:1;transform:translate(0,0) rotate(0deg) scale(1)}100%{opacity:0;transform:translate(var(--cx,0px),var(--cy,100vh)) rotate(var(--cr,720deg)) scale(.3)}}
+
+/* TYPEWRITER */
+.poem-typewriter .tw-char{opacity:0;display:inline;animation:twReveal .05s ease forwards}
+@keyframes twReveal{to{opacity:1}}
+.tw-cursor{display:inline-block;width:2px;height:1.2em;background:var(--gold);animation:twBlink .6s ease-in-out infinite;vertical-align:text-bottom;margin-left:2px}
+@keyframes twBlink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* MAIN PAGE */
+#mainPage{display:none}
+#mainPage.active{display:block;animation:fadeInUp 1s ease-out}
+.hearts-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.floating-heart{position:absolute;bottom:-80px;animation:floatUp linear infinite;opacity:0;filter:blur(.5px)}
+@keyframes floatUp{0%{transform:translateY(0) rotate(0deg) scale(.5);opacity:0}10%{opacity:.7}50%{opacity:.5}90%{opacity:.2}100%{transform:translateY(-110vh) rotate(360deg) scale(1.2);opacity:0}}
+.big-heart-container{position:fixed;pointer-events:none;z-index:1;animation:pulseGlow 2s ease-in-out infinite}
+.big-heart-1{top:10%;left:5%}.big-heart-2{top:60%;right:3%}.big-heart-3{bottom:15%;left:15%}.big-heart-4{top:25%;right:12%}
+@keyframes pulseGlow{0%,100%{transform:scale(1);filter:drop-shadow(0 0 20px rgba(255,77,109,.4))}50%{transform:scale(1.15);filter:drop-shadow(0 0 40px rgba(255,77,109,.8))}}
+.big-heart-svg{width:100px;height:100px;fill:var(--rose-hot);opacity:.15}
+.big-heart-2 .big-heart-svg{width:140px;height:140px;fill:var(--rose-deep)}.big-heart-3 .big-heart-svg{width:80px;height:80px;fill:var(--rose-blush)}.big-heart-4 .big-heart-svg{width:60px;height:60px;fill:var(--rose-soft)}
+.sparkle{position:fixed;width:4px;height:4px;background:var(--gold-light);border-radius:50%;pointer-events:none;z-index:2;animation:sparkleAnim 3s ease-in-out infinite}
+@keyframes sparkleAnim{0%,100%{opacity:0;transform:scale(0)}50%{opacity:1;transform:scale(1)}}
+.main-content{position:relative;z-index:10;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2rem}
+
+/* HERO */
+.hero{text-align:center;padding:4rem 2rem;animation:fadeInUp 1.5s ease-out}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:translateY(0)}}
+.hero-title{font-family:'Great Vibes',cursive;font-size:clamp(3rem,10vw,7rem);background:linear-gradient(135deg,var(--rose-light),var(--gold-light),var(--rose-blush));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 30px rgba(255,77,109,.3));line-height:1.2;animation:titleShimmer 4s ease-in-out infinite}
+@keyframes titleShimmer{0%,100%{filter:drop-shadow(0 0 30px rgba(255,77,109,.3)) brightness(1)}50%{filter:drop-shadow(0 0 50px rgba(255,77,109,.6)) brightness(1.1)}}
+.hero-subtitle{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1rem,3vw,1.6rem);color:var(--rose-blush);margin-top:1rem;opacity:0;animation:fadeInUp 1.5s ease-out .5s forwards;letter-spacing:2px}
+.hero-date{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);margin-top:.8rem;letter-spacing:6px;text-transform:uppercase;opacity:0;animation:fadeInUp 1.5s ease-out .8s forwards}
+
+/* MEGA HEART */
+.mega-heart-section{position:relative;margin:3rem 0;display:flex;justify-content:center;align-items:center}
+.mega-heart{width:clamp(200px,40vw,350px);height:clamp(200px,40vw,350px);animation:megaBeat 1.2s ease-in-out infinite;filter:drop-shadow(0 0 60px rgba(230,0,58,.6));cursor:pointer;position:relative;z-index:5}
+.mega-heart:hover{animation:megaBeatFast .4s ease-in-out infinite}
+@keyframes megaBeat{0%{transform:scale(1)}15%{transform:scale(1.15)}30%{transform:scale(1)}45%{transform:scale(1.1)}60%{transform:scale(1)}100%{transform:scale(1)}}
+@keyframes megaBeatFast{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+.mega-heart-ring{position:absolute;border:2px solid var(--rose-soft);border-radius:50%;opacity:0;animation:ringPulse 3s ease-out infinite}
+.mega-heart-ring:nth-child(1){width:300px;height:300px;animation-delay:0s}.mega-heart-ring:nth-child(2){width:400px;height:400px;animation-delay:1s}.mega-heart-ring:nth-child(3){width:500px;height:500px;animation-delay:2s}
+@keyframes ringPulse{0%{transform:scale(.5);opacity:.6}100%{transform:scale(1.5);opacity:0}}
+
+/* DOOR SCENE */
+.lovers-section{position:relative;margin:2rem 0 4rem;text-align:center}
+.lovers-scene{position:relative;width:clamp(320px,90vw,700px);height:420px;margin:0 auto;display:flex;justify-content:center;align-items:flex-end}
+.door-scene{position:relative;width:100%;height:100%}
+.door-frame{position:absolute;bottom:40px;width:100px;height:200px;border-radius:50px 50px 0 0;overflow:hidden}
+.door-frame-left{left:8%}.door-frame-right{right:8%}
+.door-back{width:100%;height:100%;background:linear-gradient(180deg,#1a0008,#0d0004);border:2px solid var(--rose-deep);border-radius:50px 50px 0 0;position:relative}
+.door-back::after{content:'';position:absolute;top:50%;width:10px;height:10px;background:var(--gold);border-radius:50%;box-shadow:0 0 8px var(--gold)}
+.door-frame-left .door-back::after{right:12px}.door-frame-right .door-back::after{left:12px}
+.door-panel{position:absolute;top:0;width:100%;height:100%;background:linear-gradient(135deg,var(--rose-deep),var(--wine));border:2px solid rgba(255,77,109,.4);border-radius:50px 50px 0 0;z-index:2}
+.door-frame-left .door-panel{transform-origin:left center;animation:openDoorLeft 2s ease-in-out .5s forwards}
+.door-frame-right .door-panel{transform-origin:right center;animation:openDoorRight 2s ease-in-out .5s forwards}
+@keyframes openDoorLeft{0%{transform:perspective(600px) rotateY(0deg)}100%{transform:perspective(600px) rotateY(-110deg)}}
+@keyframes openDoorRight{0%{transform:perspective(600px) rotateY(0deg)}100%{transform:perspective(600px) rotateY(110deg)}}
+.door-light{position:absolute;bottom:40px;width:120px;height:210px;border-radius:60px 60px 0 0;opacity:0}
+.door-light-left{left:6%;background:radial-gradient(ellipse at center,rgba(255,200,100,.3),transparent 70%);animation:lightReveal 2s ease-in-out .8s forwards}
+.door-light-right{right:6%;background:radial-gradient(ellipse at center,rgba(255,150,180,.3),transparent 70%);animation:lightReveal 2s ease-in-out .8s forwards}
+@keyframes lightReveal{0%{opacity:0}100%{opacity:1}}
+.character{position:absolute;bottom:40px;z-index:5;opacity:0}
+.char-left{left:10%;animation:walkFromLeft 3s ease-in-out 2s forwards,hugBounceLeft 2s ease-in-out 5s forwards}
+.char-right{right:10%;animation:walkFromRight 3s ease-in-out 2s forwards,hugBounceRight 2s ease-in-out 5s forwards}
+@keyframes walkFromLeft{0%{left:10%;opacity:0;transform:scale(.9)}20%{opacity:1;transform:scale(1)}100%{left:calc(50% - 65px);opacity:1;transform:scale(1)}}
+@keyframes walkFromRight{0%{right:10%;opacity:0;transform:scale(.9)}20%{opacity:1;transform:scale(1)}100%{right:calc(50% - 65px);opacity:1;transform:scale(1)}}
+@keyframes hugBounceLeft{0%{transform:scale(1) rotate(0)}40%{transform:scale(1.05) rotate(-3deg)}100%{transform:scale(1) rotate(-2deg)}}
+@keyframes hugBounceRight{0%{transform:scale(1) rotate(0)}40%{transform:scale(1.05) rotate(3deg)}100%{transform:scale(1) rotate(2deg)}}
+.char-left .legs,.char-right .legs{animation:walkLegs .5s ease-in-out 2s 6 alternate}
+@keyframes walkLegs{0%{transform:skewX(-3deg)}100%{transform:skewX(3deg)}}
+.hug-hearts{position:absolute;top:30%;left:50%;transform:translateX(-50%);z-index:10;pointer-events:none}
+.hug-heart{position:absolute;font-size:1.5rem;opacity:0;animation:hugHeartBurst 3s ease-out 5.2s forwards}
+.hug-heart:nth-child(1){--angle:0deg;--dist:80px;animation-delay:5.2s;font-size:2rem}.hug-heart:nth-child(2){--angle:30deg;--dist:100px;animation-delay:5.3s}.hug-heart:nth-child(3){--angle:60deg;--dist:70px;animation-delay:5.1s;font-size:1.8rem}.hug-heart:nth-child(4){--angle:90deg;--dist:110px;animation-delay:5.4s}.hug-heart:nth-child(5){--angle:120deg;--dist:90px;animation-delay:5.15s;font-size:2.2rem}.hug-heart:nth-child(6){--angle:150deg;--dist:85px;animation-delay:5.35s}.hug-heart:nth-child(7){--angle:180deg;--dist:95px;animation-delay:5.25s;font-size:1.6rem}.hug-heart:nth-child(8){--angle:210deg;--dist:75px;animation-delay:5.45s}.hug-heart:nth-child(9){--angle:240deg;--dist:105px;animation-delay:5.18s;font-size:1.3rem}.hug-heart:nth-child(10){--angle:270deg;--dist:80px;animation-delay:5.38s;font-size:2rem}.hug-heart:nth-child(11){--angle:300deg;--dist:115px;animation-delay:5.28s}.hug-heart:nth-child(12){--angle:330deg;--dist:90px;animation-delay:5.42s;font-size:1.7rem}
+@keyframes hugHeartBurst{0%{transform:translate(0,0) scale(0);opacity:0}30%{opacity:1;transform:translate(calc(cos(var(--angle))*var(--dist)*.5),calc(sin(var(--angle))*var(--dist)*.5)) scale(1.3)}100%{opacity:0;transform:translate(calc(cos(var(--angle))*var(--dist)),calc(sin(var(--angle))*var(--dist) - 50px)) scale(.5)}}
+.after-hug-hearts{position:absolute;top:10%;left:50%;transform:translateX(-50%);z-index:10;pointer-events:none}
+.float-heart-after{position:absolute;opacity:0;animation:floatAfterHug 4s ease-out infinite}
+.float-heart-after:nth-child(1){left:-10px;font-size:1.5rem;animation-delay:6s}.float-heart-after:nth-child(2){left:15px;font-size:2rem;animation-delay:6.8s}.float-heart-after:nth-child(3){left:-25px;font-size:1.2rem;animation-delay:7.5s}.float-heart-after:nth-child(4){left:5px;font-size:1.8rem;animation-delay:7s}.float-heart-after:nth-child(5){left:-15px;font-size:2.3rem;animation-delay:8s}
+@keyframes floatAfterHug{0%{transform:translateY(0) scale(.5);opacity:0}15%{opacity:1;transform:translateY(-20px) scale(1)}100%{opacity:0;transform:translateY(-180px) scale(.3) translateX(20px)}}
+.meeting-glow{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);width:120px;height:120px;background:radial-gradient(circle,rgba(255,77,109,.4),transparent 70%);border-radius:50%;opacity:0;z-index:4;animation:meetingGlow 1s ease-out 4.8s forwards,meetingPulse 2s ease-in-out 5.8s infinite}
+@keyframes meetingGlow{0%{opacity:0;transform:translateX(-50%) scale(.3)}100%{opacity:1;transform:translateX(-50%) scale(1)}}
+@keyframes meetingPulse{0%,100%{transform:translateX(-50%) scale(1);opacity:.6}50%{transform:translateX(-50%) scale(1.3);opacity:1}}
+.ground{position:absolute;bottom:38px;left:5%;width:90%;height:3px;background:linear-gradient(90deg,transparent,var(--rose-deep),var(--rose-soft),var(--rose-deep),transparent);border-radius:50%;filter:blur(2px)}
+.petals-container{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden}
+.petal{position:absolute;top:-20px;width:15px;height:12px;background:var(--rose-soft);border-radius:50% 0 50% 50%;opacity:.6;animation:petalFall linear infinite}
+@keyframes petalFall{0%{transform:translateY(0) rotate(0) translateX(0);opacity:.7}25%{transform:translateY(100px) rotate(90deg) translateX(30px)}50%{transform:translateY(200px) rotate(180deg) translateX(-20px)}75%{transform:translateY(300px) rotate(270deg) translateX(15px)}100%{transform:translateY(420px) rotate(360deg) translateX(-10px);opacity:0}}
+
+/* POEM */
+.love-message{max-width:700px;text-align:center;padding:3rem 2rem;background:linear-gradient(135deg,rgba(181,0,42,.1),rgba(107,0,32,.2));border:1px solid rgba(255,77,109,.2);border-radius:30px;backdrop-filter:blur(10px);position:relative;overflow:hidden;opacity:0;animation:fadeInUp 1.5s ease-out 1.2s forwards}
+.love-message::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent,rgba(255,77,109,.05),transparent,rgba(212,160,23,.05),transparent);animation:rotateBg 10s linear infinite}
+@keyframes rotateBg{to{transform:rotate(360deg)}}
+.love-message p{position:relative;z-index:2;font-family:'Lora',serif;font-size:clamp(1.1rem,2.5vw,1.35rem);line-height:2.2;color:#fff;letter-spacing:.3px;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.love-message .signature{font-family:'Great Vibes',cursive;font-size:2rem;color:var(--gold);margin-top:1.5rem;display:block;position:relative;z-index:2}
+
+/* BUBBLES */
+.bubbles-section{text-align:center;margin:1rem 0 0;padding:1rem 2rem}
+.bubbles-instruction{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(.9rem,2vw,1.1rem);color:var(--rose-blush);margin-bottom:1.5rem;opacity:0;animation:fadeInUp 1s ease-out 1s forwards}
+.bubbles-row{display:flex;justify-content:center;gap:clamp(10px,3vw,25px);flex-wrap:wrap;perspective:800px;min-height:120px;align-items:center}
+.bubble{width:clamp(55px,12vw,80px);height:clamp(55px,12vw,80px);border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,179,193,.35),rgba(255,77,109,.15) 50%,rgba(181,0,42,.1) 100%);border:1.5px solid rgba(255,179,193,.25);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;backdrop-filter:blur(6px);box-shadow:inset 0 -8px 20px rgba(255,77,109,.08),0 4px 20px rgba(230,0,58,.15);opacity:0;animation:bubbleAppear .8s ease-out forwards,bubbleDance var(--dance-dur,4s) var(--dance-ease,ease-in-out) var(--dance-delay,0s) infinite;transition:box-shadow .3s ease;-webkit-tap-highlight-color:transparent}
+.bubble:hover{box-shadow:inset 0 -8px 20px rgba(255,77,109,.12),0 8px 35px rgba(230,0,58,.4)}
+.bubble::before{content:'';position:absolute;top:12%;left:20%;width:30%;height:20%;background:radial-gradient(ellipse,rgba(255,255,255,.5),transparent);border-radius:50%;transform:rotate(-20deg)}
+.bubble::after{content:'';position:absolute;top:8%;right:18%;width:12%;height:10%;background:rgba(255,255,255,.3);border-radius:50%}
+.bubble-letter{font-family:'Great Vibes',cursive;font-size:clamp(1.8rem,5vw,2.5rem);color:var(--cream);text-shadow:0 0 15px rgba(255,179,193,.5);z-index:2;pointer-events:none;user-select:none}
+@keyframes bubbleAppear{from{opacity:0;transform:scale(0) translateY(30px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes bubbleDance{0%{transform:translateY(var(--y1,0px)) translateX(var(--x1,0px)) scale(1) rotate(var(--r1,0deg))}25%{transform:translateY(var(--y2,-12px)) translateX(var(--x2,8px)) scale(var(--s2,1.05)) rotate(var(--r2,3deg))}50%{transform:translateY(var(--y3,5px)) translateX(var(--x3,-6px)) scale(1) rotate(var(--r3,-2deg))}75%{transform:translateY(var(--y4,-8px)) translateX(var(--x4,4px)) scale(var(--s4,1.03)) rotate(var(--r4,2deg))}100%{transform:translateY(var(--y1,0px)) translateX(var(--x1,0px)) scale(1) rotate(var(--r1,0deg))}}
+.bubble.popped{animation:bubblePop .6s ease-out forwards !important;pointer-events:none}
+@keyframes bubblePop{0%{transform:scale(1);opacity:1;filter:blur(0)}30%{transform:scale(1.4);opacity:.7;filter:blur(0)}100%{transform:scale(2);opacity:0;filter:blur(8px)}}
+
+/* Burst particles on pop */
+.burst-particle{position:absolute;border-radius:50%;pointer-events:none;z-index:100;animation:burstFly .8s ease-out forwards}
+@keyframes burstFly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--bx),var(--by)) scale(0)}}
+
+/* Revealed phrase */
+.phrase-reveal{position:relative;overflow:hidden;max-height:0;opacity:0;transition:max-height .6s ease,opacity .5s ease,margin .4s ease;margin:0 auto;max-width:700px}
+.phrase-reveal.show{max-height:120px;opacity:1;margin:8px auto}
+.phrase-card{background:linear-gradient(135deg,rgba(255,77,109,.08),rgba(212,160,23,.05));border:1px solid rgba(255,179,193,.15);border-radius:16px;padding:.8rem 1.2rem;display:flex;align-items:center;gap:.8rem}
+.phrase-card .phrase-letter{font-family:'Great Vibes',cursive;font-size:2rem;color:var(--gold);min-width:30px;text-align:center;text-shadow:0 0 12px rgba(212,160,23,.5)}
+.phrase-card .phrase-text{font-family:'Lora',serif;font-size:clamp(.9rem,2vw,1.1rem);color:var(--rose-pale);line-height:1.6}
+
+/* ACROSTIC */
+.acrostic-section{max-width:750px;width:100%;padding:3rem 2rem;margin:2rem 0;text-align:left;opacity:0;animation:fadeInUp 1.5s ease-out 1.8s forwards}
+.acrostic-title{font-family:'Great Vibes',cursive;font-size:clamp(1.8rem,5vw,3rem);color:var(--rose-light);text-align:center;margin-bottom:2rem}
+.acrostic-container{background:linear-gradient(135deg,rgba(181,0,42,.08),rgba(107,0,32,.15));border:1px solid rgba(255,77,109,.15);border-radius:25px;padding:2.5rem 2rem;backdrop-filter:blur(10px);position:relative;overflow:hidden}
+.acrostic-container::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 90deg,transparent,rgba(212,160,23,.03),transparent,rgba(255,77,109,.03),transparent);animation:rotateBg 15s linear infinite}
+.acrostic-line{position:relative;z-index:2;padding:.6rem 0;font-family:'Lora',serif;font-size:clamp(1rem,2.2vw,1.2rem);line-height:1.8;color:var(--rose-pale);opacity:0;transform:translateX(-20px);animation:acrosticReveal .6s ease-out forwards}
+.acrostic-letter{font-family:'Great Vibes',cursive;font-size:2.2em;color:var(--gold);font-weight:bold;display:inline-block;min-width:35px;text-shadow:0 0 15px rgba(212,160,23,.4);animation:letterPulse 3s ease-in-out infinite;vertical-align:middle;line-height:1;margin-right:4px}
+@keyframes acrosticReveal{to{opacity:1;transform:translateX(0)}}
+@keyframes letterPulse{0%,100%{text-shadow:0 0 15px rgba(212,160,23,.4)}50%{text-shadow:0 0 25px rgba(212,160,23,.8),0 0 40px rgba(255,77,109,.3)}}
+.acrostic-heart-divider{text-align:center;font-size:1.2rem;letter-spacing:15px;color:var(--rose-soft);padding:1rem 0;opacity:.5;position:relative;z-index:2}
+
+/* FOOTER */
+.footer{text-align:center;padding:3rem 2rem;opacity:0;animation:fadeInUp 1.5s ease-out 2.4s forwards}
+.footer-hearts{font-size:2rem;letter-spacing:8px;animation:pulseGlow 2s ease-in-out infinite;display:inline-block}
+.footer p{font-family:'Great Vibes',cursive;font-size:1.5rem;color:var(--rose-blush);margin-top:1rem}
+.click-heart{position:fixed;pointer-events:none;font-size:2rem;z-index:1000;animation:clickHeartAnim 1.5s ease-out forwards}
+@keyframes clickHeartAnim{0%{transform:scale(0) rotate(0);opacity:1}50%{transform:scale(1.5) rotate(20deg);opacity:.8}100%{transform:scale(0) rotate(-20deg) translateY(-100px);opacity:0}}
+@media(max-width:600px){.lovers-scene{height:380px}.door-frame{width:75px;height:160px}.mega-heart{width:180px;height:180px}.character svg{width:65px}.acrostic-container{padding:1.5rem 1rem}.acrostic-letter{font-size:1.8em;min-width:28px}}
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<div id="landingPage">
+  <div class="landing-petals" id="landingPetals"></div>
+  <h1 class="landing-title">Saint-Valentin</h1>
+  <p class="landing-subtitle">Tu as reçu une lettre d'amour...</p>
+
+  <!-- ENVELOPE -->
+  <div class="envelope-wrap" id="envelopeWrap">
+    <div class="envelope">
+      <div class="envelope-body">
+        <div class="envelope-inner-shadow"></div>
+        <div class="envelope-letter">
+          <span class="envelope-letter-text">Clique pour ouvrir<br>💌</span>
+        </div>
+      </div>
+      <div class="envelope-flap"></div>
+      <div class="envelope-heart">❤️</div>
+      <div class="envelope-seal">💝</div>
+    </div>
+  </div>
+
+  <div class="name-form" id="nameForm">
+    <label class="name-label">Entre le prénom de la personne que tu aimes 💕</label>
+    <input type="text" class="name-input" id="nameInput" placeholder="Son prénom..." maxlength="25" autocomplete="off">
+    <button class="submit-btn" id="submitBtn" disabled>Ouvrir mon cœur 💝</button>
+  </div>
+</div>
+
+<!-- MAIN PAGE -->
+<div id="mainPage">
+  <!-- Music button -->
+  <button class="music-btn" id="musicBtn" title="Musique">
+    <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+  </button>
+  <!-- Confetti button -->
+  <button class="confetti-btn" id="confettiBtn">🎉 Confettis !</button>
+  <div class="hearts-container" id="heartsContainer"></div>
+  <div class="big-heart-container big-heart-1"><svg class="big-heart-svg" viewBox="0 0 100 100"><path d="M50 88 C25 65,0 45,0 28 C0 12,12 0,25 0 C35 0,45 8,50 18 C55 8,65 0,75 0 C88 0,100 12,100 28 C100 45,75 65,50 88Z"/></svg></div>
+  <div class="big-heart-container big-heart-2" style="animation-delay:.6s"><svg class="big-heart-svg" viewBox="0 0 100 100"><path d="M50 88 C25 65,0 45,0 28 C0 12,12 0,25 0 C35 0,45 8,50 18 C55 8,65 0,75 0 C88 0,100 12,100 28 C100 45,75 65,50 88Z"/></svg></div>
+  <div class="big-heart-container big-heart-3" style="animation-delay:1.2s"><svg class="big-heart-svg" viewBox="0 0 100 100"><path d="M50 88 C25 65,0 45,0 28 C0 12,12 0,25 0 C35 0,45 8,50 18 C55 8,65 0,75 0 C88 0,100 12,100 28 C100 45,75 65,50 88Z"/></svg></div>
+  <div class="big-heart-container big-heart-4" style="animation-delay:1.8s"><svg class="big-heart-svg" viewBox="0 0 100 100"><path d="M50 88 C25 65,0 45,0 28 C0 12,12 0,25 0 C35 0,45 8,50 18 C55 8,65 0,75 0 C88 0,100 12,100 28 C100 45,75 65,50 88Z"/></svg></div>
+  <div id="sparkles"></div>
+
+  <div class="main-content">
+    <section class="hero">
+      <h1 class="hero-title">Joyeuse Saint-Valentin</h1>
+      <p class="hero-subtitle">L'amour est la seule fleur qui pousse sans saison</p>
+      <p class="hero-date">✦ 14 Février 2026 ✦</p>
+    </section>
+
+    <section class="mega-heart-section">
+      <div class="mega-heart-ring"></div><div class="mega-heart-ring"></div><div class="mega-heart-ring"></div>
+      <svg class="mega-heart" viewBox="0 0 100 100" id="megaHeart">
+        <defs><radialGradient id="heartGrad" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#e6003a"/><stop offset="100%" stop-color="#8b0020"/></radialGradient><filter id="heartGlow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+        <path fill="url(#heartGrad)" filter="url(#heartGlow)" d="M50 88 C25 65,0 45,0 28 C0 12,12 0,25 0 C35 0,45 8,50 18 C55 8,65 0,75 0 C88 0,100 12,100 28 C100 45,75 65,50 88Z"/>
+      </svg>
+    </section>
+
+    <!-- BUBBLES -->
+    <section class="bubbles-section" id="bubblesSection">
+      <p class="bubbles-instruction">Clique sur chaque bulle pour découvrir un message secret 💕</p>
+      <div class="bubbles-row" id="bubblesRow"></div>
+      <div id="phrasesArea"></div>
+    </section>
+
+    <section class="lovers-section"><div class="lovers-scene"><div class="petals-container" id="petalsContainer"></div><div class="door-scene">
+      <div class="door-light door-light-left"></div><div class="door-frame door-frame-left"><div class="door-back"></div><div class="door-panel"></div></div>
+      <div class="door-light door-light-right"></div><div class="door-frame door-frame-right"><div class="door-back"></div><div class="door-panel"></div></div>
+      <div class="character char-left"><svg width="80" height="200" viewBox="0 0 80 200"><defs><linearGradient id="dressGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#e6003a"/><stop offset="100%" stop-color="#8b0020"/></linearGradient><radialGradient id="skin1" cx="50%" cy="40%" r="50%"><stop offset="0%" stop-color="#ffcdb2"/><stop offset="100%" stop-color="#e5989b"/></radialGradient></defs><ellipse cx="40" cy="28" rx="18" ry="22" fill="url(#skin1)"/><path d="M22 22 C20 8,32 2,42 2 C52 2,62 8,60 22 C62 30,64 45,62 55 C60 50,55 40,55 30 C50 20,30 20,25 30 C25 40,20 50,18 55 C16 45,18 30,22 22Z" fill="#3d0012"/><rect x="34" y="46" width="12" height="14" rx="5" fill="url(#skin1)"/><path d="M25 58 C20 80,10 140,5 190 L75 190 C70 140,60 80,55 58 Z" fill="url(#dressGrad)"/><g class="arms-left"><path d="M28 65 C18 70,12 80,10 90" stroke="url(#skin1)" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M52 65 C62 70,68 80,70 90" stroke="url(#skin1)" stroke-width="10" stroke-linecap="round" fill="none"/></g><g class="legs"><line x1="30" y1="185" x2="28" y2="200" stroke="#6b0020" stroke-width="8" stroke-linecap="round"/><line x1="50" y1="185" x2="52" y2="200" stroke="#6b0020" stroke-width="8" stroke-linecap="round"/></g></svg></div>
+      <div class="character char-right"><svg width="85" height="200" viewBox="0 0 85 200"><defs><linearGradient id="suitGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#2a1020"/><stop offset="100%" stop-color="#15000d"/></linearGradient><radialGradient id="skin2" cx="50%" cy="40%" r="50%"><stop offset="0%" stop-color="#ffcdb2"/><stop offset="100%" stop-color="#dba398"/></radialGradient></defs><ellipse cx="42" cy="28" rx="20" ry="23" fill="url(#skin2)"/><path d="M22 20 C20 6,34 0,44 0 C54 0,66 6,64 20 C62 15,52 10,42 10 C32 10,24 15,22 20Z" fill="#1a0008"/><rect x="36" y="47" width="14" height="15" rx="6" fill="url(#skin2)"/><path d="M20 60 C18 80,15 140,12 190 L73 190 C70 140,67 80,65 60 Z" fill="url(#suitGrad)"/><path d="M38 62 L42 90 L35 92 Z" fill="rgba(255,255,255,.06)"/><path d="M47 62 L43 90 L50 92 Z" fill="rgba(255,255,255,.06)"/><path d="M41 62 L43 62 L44 85 L42 88 L40 85 Z" fill="#e6003a"/><g class="arms-right"><path d="M22 68 C12 73,6 83,4 93" stroke="url(#skin2)" stroke-width="11" stroke-linecap="round" fill="none"/><path d="M63 68 C73 73,79 83,81 93" stroke="url(#skin2)" stroke-width="11" stroke-linecap="round" fill="none"/></g><g class="legs"><line x1="32" y1="185" x2="30" y2="200" stroke="#0d0005" stroke-width="9" stroke-linecap="round"/><line x1="53" y1="185" x2="55" y2="200" stroke="#0d0005" stroke-width="9" stroke-linecap="round"/></g></svg></div>
+      <div class="meeting-glow"></div>
+      <div class="hug-hearts"><span class="hug-heart">💗</span><span class="hug-heart">❤️</span><span class="hug-heart">💕</span><span class="hug-heart">💖</span><span class="hug-heart">💝</span><span class="hug-heart">💓</span><span class="hug-heart">🩷</span><span class="hug-heart">♥️</span><span class="hug-heart">💗</span><span class="hug-heart">💘</span><span class="hug-heart">❤️</span><span class="hug-heart">💕</span></div>
+      <div class="after-hug-hearts"><span class="float-heart-after">💗</span><span class="float-heart-after">❤️</span><span class="float-heart-after">💕</span><span class="float-heart-after">💖</span><span class="float-heart-after">💝</span></div>
+      <div class="ground"></div>
+    </div></div></section>
+
+    <section class="love-message poem-typewriter" id="poemSection">
+      <p id="poemText"></p>
+      <span class="signature" id="poemSignature" style="opacity:0">~ Pour toi, pour toujours ~</span>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-hearts">💕 💗 ❤️ 💗 💕</div>
+      <p>Fait avec amour, pour toi</p>
+    </footer>
+  </div>
+</div>
+
+<script>
+const acrosticDB={
+a:["Avec toi, chaque instant devient un souvenir précieux","Au creux de tes bras, j'ai trouvé ma maison","Aimer, c'est te choisir encore chaque matin","À chaque battement de mon cœur, c'est ton nom que j'entends","Au-delà des mots, mon âme reconnaît la tienne","Aujourd'hui et pour toujours, mon cœur t'appartient","Aucune étoile ne brille autant que tes yeux","Au fil des jours, mon amour pour toi ne fait que grandir","À tes côtés, même le silence est une mélodie","Apprendre à t'aimer fut la plus belle leçon de ma vie"],
+b:["Bonheur infini depuis que tu es dans ma vie","Brûlant d'amour, mon cœur ne bat que pour toi","Beauté de ton sourire qui illumine mes journées","Baiser volé sous la pluie, moment d'éternité","Bien plus qu'un rêve, tu es ma réalité enchantée","Béni soit le jour où nos chemins se sont croisés","Battements de cœur synchronisés, nous ne faisons qu'un","Bouleversé par la douceur de ton regard","Blotti contre toi, le monde entier disparaît","Briser les distances, car rien ne peut nous séparer"],
+c:["Chaque jour avec toi est un cadeau du ciel","Comme une étoile, tu guides mon chemin dans la nuit","C'est dans tes yeux que j'ai trouvé l'infini","Caresse de ton souffle sur ma peau, frisson d'amour","Croire en nous deux, c'est ma plus grande force","Cent vies ne suffiraient pas à t'aimer comme tu le mérites","Coucher de soleil partagé, promesse d'un lendemain ensemble","Comme le printemps revient toujours, mon amour pour toi renaît","Ce que je ressens pour toi dépasse tous les mots","Cœur à cœur, nous écrivons la plus belle histoire"],
+d:["Douce est la nuit quand tu es à mes côtés","Dans tes bras, j'ai trouvé la paix que je cherchais","Depuis toi, chaque jour est une fête","Deux âmes liées par un fil invisible et éternel","De tous les trésors du monde, c'est toi le plus précieux","Danse avec moi sous les étoiles, mon amour","Demain et tous les jours, je te choisirai encore","Destination bonheur : partout où tu seras","Des mots ne suffisent pas à décrire ce que tu es pour moi","Doucement, tu as conquis chaque recoin de mon cœur"],
+e:["Ensemble, nous pouvons tout traverser","Éternellement, mon cœur sera lié au tien","En un seul regard, tu as changé ma vie","Éblouissante lumière de ton amour qui me guide","Et si le bonheur avait un visage, ce serait le tien","Étoile de mes nuits, soleil de mes matins","Envie de toi à chaque seconde qui passe","Enchantement perpétuel quand je suis près de toi","En toi, j'ai trouvé tout ce que j'ai toujours cherché","Écrire notre histoire est mon plus beau projet"],
+f:["Flamme éternelle qui brûle dans mon cœur pour toi","Fou d'amour depuis le premier jour","Fabuleuse aventure que celle de t'aimer","Fidèle à toi, aujourd'hui et pour l'éternité","Frémir à chaque fois que ta main touche la mienne","Fortune immense que d'avoir croisé ton regard","Fleur de mon jardin secret, tu embaumes ma vie","Faisons de chaque instant un souvenir inoubliable","Forte est la tempête, mais plus fort est notre amour","Fusionner nos rêves pour n'en faire qu'un seul"],
+g:["Grâce à toi, j'ai appris ce qu'aimer veut dire","Gravé dans mon cœur, ton nom y restera pour toujours","Grand est mon bonheur quand tu es là","Gardien de mon cœur, tu en détiens la clé","Goûter au bonheur, c'est simplement être avec toi","Grandir ensemble, main dans la main, cœur contre cœur","Galaxie entière dans tes yeux quand tu me regardes","Guérir toutes les blessures grâce à la chaleur de ton amour","Gracieuse est ta façon d'embellir chaque journée","Garder précieusement chaque moment passé ensemble"],
+h:["Heureux est celui qui peut t'appeler son amour","Harmonie parfaite entre ton cœur et le mien","Hier, aujourd'hui, demain — toujours je t'aimerai","Hors du temps quand je suis dans tes bras","Horizon lumineux depuis que tu fais partie de ma vie","Halte aux doutes, notre amour est invincible","Histoire d'amour sans fin, voilà ce que nous vivons","Hymne à la joie que tu fais résonner dans mon cœur","Habiter ton regard est mon plus doux refuge","Humblement, je te donne tout ce que je suis"],
+i:["Inoubliable, comme chaque seconde passée avec toi","Infini est l'amour que je te porte","Illuminer ma vie, voilà ce que tu fais chaque jour","Inséparables, nos cœurs battent au même rythme","Ivresse de bonheur quand tu murmures mon nom","Imaginaire devenu réalité depuis notre premier baiser","Intense et profond, cet amour qui nous unit","Incomparable, voilà ce que tu es à mes yeux","Ici et maintenant, je veux te dire combien je t'aime","Idéal que je croyais impossible, tu l'as rendu réel"],
+j:["Jamais je n'aurais cru pouvoir aimer aussi fort","Joie immense d'être auprès de toi chaque jour","Jardin fleuri de notre amour qui ne se fane jamais","Je t'aime plus que tous les mots du monde","Juste un regard de toi suffit à faire battre mon cœur","Jour après jour, mon amour pour toi se renforce","Joyau rare, tu es mon plus grand trésor","Jusqu'au bout du monde, je te suivrai","Juré pour toujours, mon cœur est à toi","Jalousement, je garde chaque souvenir de nous"],
+k:["Kaléidoscope de couleurs que tu apportes à ma vie","Kilomètres ou centimètres, rien ne change mon amour","Karma merveilleux qui nous a réunis","Kolossal est le bonheur que tu m'apportes","Kermesse de bonheur dans mon cœur grâce à toi","Kayak sur l'océan de la vie, nous ramons ensemble","Kinésie de nos corps qui se cherchent et se trouvent","Keeper de mon cœur, tu gardes la clé de tout mon être","King ou queen de mon univers, voilà ce que tu es","Kissing you est ma chose préférée au monde"],
+l:["L'amour que je te porte est sans limites","Lumière de ma vie, tu éclaires mes jours les plus sombres","Loin de toi, chaque minute dure une éternité","Libre et heureux, voilà ce que tu me rends","Lèvres douces comme le miel quand tu m'embrasses","Légende de notre amour, écrite dans les étoiles","Laisser parler mon cœur, c'est prononcer ton nom","Loyauté éternelle, tel est mon serment d'amour","Larme de joie quand je réalise la chance que j'ai","Lune et soleil réunis, voilà ce que nous sommes"],
+m:["Mon cœur t'appartient pour l'éternité","Magnifique est chaque instant partagé avec toi","Merveille des merveilles, voilà ce que tu es","Murmures d'amour au creux de l'oreille, frissons garantis","Magie pure de tes yeux qui me captivent","Mélodie douce de ta voix qui apaise mon âme","Marcher ensemble sur le chemin de la vie, quel bonheur","Mon plus grand rêve s'est réalisé le jour où je t'ai rencontré","Miracle quotidien que de se réveiller à tes côtés","Mourir d'amour serait encore trop peu pour toi"],
+n:["Nuit étoilée, tes yeux brillent encore plus fort","Notre amour est le plus beau poème jamais écrit","Nier l'évidence est impossible : je suis fou de toi","Naviguer ensemble sur l'océan de la vie","Nulle part ailleurs je ne suis aussi heureux qu'avec toi","Noble et pur, cet amour qui nous lie","Naissance d'un bonheur infini le jour de notre rencontre","N'avoir besoin de rien d'autre que ta présence","Neige ou soleil, chaque saison est belle à tes côtés","Nostalgique de toi dès que tu t'éloignes un instant"],
+o:["Oasis de bonheur dans le désert de la vie","Offrir mon cœur est le plus beau cadeau que je puisse faire","Ouvrir les yeux et te voir, voilà mon bonheur quotidien","Océan d'amour dans lequel je veux me noyer avec toi","Or pur est la valeur de chaque moment passé ensemble","Oser t'aimer fut la meilleure décision de ma vie","Orchestrer notre bonheur, jour après jour, main dans la main","Ondulation douce de ton rire qui enchante mon cœur","Ouragan de passion qui emporte tout sur son passage","Ombre et lumière, tu es la couleur de mon existence"],
+p:["Pour toi, je décrocherais toutes les étoiles du ciel","Plus forte que tout, notre histoire d'amour résistera","Passion ardente qui embrase nos deux cœurs","Précieux est chaque mot que tu prononces","Promesse d'un amour éternel scellé par un baiser","Paradis terrestre, voilà ce que tu as créé dans ma vie","Poème vivant, chaque jour tu écris de nouveaux vers","Papillons dans le ventre à chaque fois que tu me souris","Plonger dans tes yeux et y découvrir l'univers entier","Palpitations de bonheur quand tu murmures je t'aime"],
+q:["Quand tu souris, le monde entier s'illumine","Quelque chose de magique se passe quand nos yeux se croisent","Quatre saisons d'amour, chacune plus belle que la précédente","Quintessence du bonheur, voilà ce que tu représentes","Quotidien extraordinaire depuis que tu partages ma vie","Que serais-je sans toi ? Une étoile sans lumière","Quête achevée, j'ai trouvé en toi tout ce que je cherchais","Quelques mots suffisent : je t'aime plus que tout","Quiétude de ton cœur contre le mien, instant de pure grâce","Qualifier notre amour ? Impossible, il dépasse tous les mots"],
+r:["Rien au monde ne pourrait me séparer de toi","Rêver de toi est mon activité préférée","Respirer ton parfum et voyager au bout du monde","Rose éternelle, symbole de notre amour indéfectible","Rayonnante comme le soleil, tu réchauffes ma vie","Retrouver tes bras chaque soir est ma plus grande joie","Romantique à souhait, notre histoire fait rêver","Raison de vivre, tu es tout pour moi","Ruisseau de tendresse qui coule entre nos deux cœurs","Reflet de mon âme, je me retrouve en toi"],
+s:["Sans toi, les étoiles perdraient leur éclat","Sourire qui fait fondre mon cœur à chaque fois","Soleil de ma vie, tu réchauffes mon existence","Secret bien gardé : tu es mon plus grand bonheur","Serment d'amour éternel que je te fais aujourd'hui","Sublime est le chemin que nous parcourons ensemble","Soupir de bonheur à chaque fois que tu m'embrasses","Symphonie d'amour composée par nos deux cœurs","Silence complice qui en dit plus que mille mots","Sensation unique de tes doigts entrelacés aux miens"],
+t:["Toi et moi, pour toujours et à jamais","Tendresse infinie dans chacun de tes gestes","Trésors cachés dans la profondeur de tes yeux","Tout mon être vibre quand tu prononces mon nom","Tu es la mélodie que mon cœur chante en silence","Tempête de passion qui balaie tous les doutes","Toujours plus amoureux de toi à chaque lever du soleil","Toucher ta main et sentir le monde s'arrêter","Tellement chanceux de pouvoir t'appeler mon amour","Traverser le temps et l'espace, pourvu que ce soit avec toi"],
+u:["Un seul regard de toi suffit à combler mon cœur","Unique au monde, tu es mon étoile polaire","Unis par un amour que rien ne peut briser","Univers entier contenu dans la chaleur de ton sourire","Urgence de te serrer dans mes bras à chaque instant","Utopie devenue réalité grâce à notre amour","Un jour sans toi est un jour sans soleil","Unisson de nos cœurs, harmonie de nos âmes","Ultime bonheur que de vieillir à tes côtés","Un murmure de toi vaut tous les cris du monde"],
+v:["Vivre avec toi est la plus belle aventure","Véritable coup de foudre dès le premier regard","Voyage au pays de l'amour, première classe, avec toi","Valse éternelle de nos deux cœurs enlacés","Voler parmi les étoiles quand tes lèvres touchent les miennes","Vibrer de bonheur à chaque mot doux que tu prononces","Vulnérable devant toi, mais plus fort grâce à toi","Victoire éclatante de l'amour sur tout le reste","Volcan de passion qui coule dans mes veines pour toi","Vœu le plus cher : passer chaque jour à tes côtés"],
+w:["Wow, chaque jour tu me surprends par ta beauté","Week-end d'amour qui devrait durer toute la vie","Wagon du bonheur dans lequel nous voyageons ensemble","Whisper I love you, et mon cœur s'envole","Wishing upon a star que notre amour dure toujours","Wonderland où tu m'emmènes à chaque baiser","Welcome dans mon cœur, tu y es chez toi","Wild est la passion qui nous consume","Waves d'amour qui déferlent quand tu me regardes","Warm comme ton étreinte qui me fait tout oublier"],
+x:["Xtra spécial, voilà ce que tu es pour moi","Xylophone de bonheur dont tu joues dans mon cœur","Xénial est l'accueil de tes bras ouverts","X marque l'endroit exact où tu as volé mon cœur","Xérès d'amour dont je m'enivre chaque jour","Xanadu personnel que tu as créé dans ma vie","Xcellence de ton amour qui surpasse tout","Xième raison de sourire : ta simple présence","Xplosion de joie à chaque fois que je te vois","Xtraordinaire aventure que celle de t'aimer"],
+y:["Yeux brillants comme des diamants quand tu me regardes","Y croire enfin, l'amour vrai existe et c'est nous","Yearning for your touch, chaque seconde loin de toi","Yachter sur l'océan de nos rêves, ensemble à jamais","Yoga du cœur : retrouver la paix dans tes bras","Yesterday, today, tomorrow — mon amour reste le même","Yéti des sentiments : immense et impossible à ignorer","Youpi crie mon cœur quand il sait qu'il va te voir","Yonder les horizons, notre amour ne connaît pas de limite","Yunique façon de me rendre heureux : être toi-même"],
+z:["Zéro doute, tu es l'amour de ma vie","Zénith de mon bonheur quand tu es près de moi","Zéphyr d'amour qui caresse mon cœur en ta présence","Zone de confort ultime : entre tes bras","Zapper le reste du monde et ne voir que toi","Zen parfait quand ta main tient la mienne","Zigzaguer entre les étoiles, ton amour me donne des ailes","Zoom sur ton sourire, le plus beau tableau du monde","Zélé gardien de notre amour, je le protégerai toujours","Zanzibar ou Paris, peu importe tant que je suis avec toi"]
+};
+
+function pickUnique(letter,usedMap){
+  if(!usedMap[letter])usedMap[letter]=[];
+  const phrases=acrosticDB[letter];
+  if(!phrases)return"... ton nom porte la magie de l'amour";
+  const used=usedMap[letter];
+  let avail=[];
+  for(let i=0;i<phrases.length;i++){if(!used.includes(i))avail.push(i)}
+  if(avail.length===0){const last=used[used.length-1];usedMap[letter]=[last];avail=[];for(let i=0;i<phrases.length;i++){if(i!==last)avail.push(i)}}
+  const pick=avail[Math.floor(Math.random()*avail.length)];
+  usedMap[letter].push(pick);
+  return phrases[pick];
+}
+
+function generateAcrostic(name){
+  const letters=name.toUpperCase().split('');
+  const usedMap={};
+  return letters.map(letter=>{
+    let base=letter.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    if(!acrosticDB[base])return{letter,phrase:"... ton nom porte la magie de l'amour"};
+    return{letter,phrase:pickUnique(base,usedMap)};
+  });
+}
+
+function renderBubbles(name){
+  const row=document.getElementById('bubblesRow');
+  const area=document.getElementById('phrasesArea');
+  row.innerHTML='';area.innerHTML='';
+  const lines=generateAcrostic(name);
+  
+  lines.forEach((line,idx)=>{
+    // Create bubble
+    const bub=document.createElement('div');
+    bub.className='bubble';
+    // Unique random dance for each bubble
+    const rn=(min,max)=>(Math.random()*(max-min)+min).toFixed(1);
+    bub.style.setProperty('--dance-dur',rn(3,6)+'s');
+    bub.style.setProperty('--dance-delay',rn(0,2)+'s');
+    bub.style.setProperty('--y1',rn(-3,3)+'px');
+    bub.style.setProperty('--y2',rn(-18,-8)+'px');
+    bub.style.setProperty('--y3',rn(4,12)+'px');
+    bub.style.setProperty('--y4',rn(-14,-5)+'px');
+    bub.style.setProperty('--x1',rn(-3,3)+'px');
+    bub.style.setProperty('--x2',rn(5,14)+'px');
+    bub.style.setProperty('--x3',rn(-12,-4)+'px');
+    bub.style.setProperty('--x4',rn(3,10)+'px');
+    bub.style.setProperty('--r1',rn(-2,2)+'deg');
+    bub.style.setProperty('--r2',rn(2,6)+'deg');
+    bub.style.setProperty('--r3',rn(-5,-1)+'deg');
+    bub.style.setProperty('--r4',rn(1,4)+'deg');
+    bub.style.setProperty('--s2',rn(1.02,1.08));
+    bub.style.setProperty('--s4',rn(1.01,1.06));
+    bub.style.animationDelay=(.3+idx*.15)+'s,'+(idx*.15)+'s';
+    const letterEl=document.createElement('span');
+    letterEl.className='bubble-letter';
+    letterEl.textContent=line.letter;
+    bub.appendChild(letterEl);
+    
+    // Create phrase reveal slot
+    const reveal=document.createElement('div');
+    reveal.className='phrase-reveal';
+    reveal.id='phrase-'+idx;
+    const card=document.createElement('div');
+    card.className='phrase-card';
+    const pLetter=document.createElement('span');
+    pLetter.className='phrase-letter';
+    pLetter.textContent=line.letter;
+    const pText=document.createElement('span');
+    pText.className='phrase-text';
+    pText.textContent=line.phrase;
+    card.appendChild(pLetter);
+    card.appendChild(pText);
+    reveal.appendChild(card);
+    area.appendChild(reveal);
+    
+    // Click handler
+    bub.addEventListener('click',function(e){
+      e.stopPropagation();
+      if(bub.classList.contains('popped'))return;
+      
+      // Burst particles
+      const rect=bub.getBoundingClientRect();
+      const cx=rect.left+rect.width/2;
+      const cy=rect.top+rect.height/2;
+      const colors=['#ff4d6d','#ff8fa3','#ffb3c1','#f0d060','#ffd6e0','#e6003a'];
+      for(let p=0;p<16;p++){
+        const particle=document.createElement('div');
+        particle.className='burst-particle';
+        const angle=(Math.PI*2/16)*p;
+        const dist=40+Math.random()*60;
+        const bx=Math.cos(angle)*dist;
+        const by=Math.sin(angle)*dist;
+        particle.style.cssText='position:fixed;left:'+(cx-4)+'px;top:'+(cy-4)+'px;width:'+(4+Math.random()*6)+'px;height:'+(4+Math.random()*6)+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';--bx:'+bx+'px;--by:'+by+'px;border-radius:50%;pointer-events:none;z-index:1000;animation:burstFly .8s ease-out forwards';
+        document.body.appendChild(particle);
+        setTimeout(()=>particle.remove(),900);
+      }
+      // Small hearts burst too
+      const heartEmojis=['💗','❤️','💕','💖','💝'];
+      for(let h=0;h<6;h++){
+        const hEl=document.createElement('div');
+        hEl.className='click-heart';
+        hEl.textContent=heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+        hEl.style.left=(cx+(Math.random()-.5)*80)+'px';
+        hEl.style.top=(cy+(Math.random()-.5)*80)+'px';
+        hEl.style.fontSize=(15+Math.random()*15)+'px';
+        document.body.appendChild(hEl);
+        setTimeout(()=>hEl.remove(),1500);
+      }
+      
+      // Pop the bubble
+      bub.classList.add('popped');
+      
+      // Reveal phrase
+      setTimeout(()=>{
+        document.getElementById('phrase-'+idx).classList.add('show');
+      },400);
+    });
+    
+    row.appendChild(bub);
+  });
+}
+
+// ENVELOPE
+const envelopeWrap=document.getElementById('envelopeWrap');
+const nameForm=document.getElementById('nameForm');
+let envelopeOpened=false;
+envelopeWrap.addEventListener('click',()=>{
+  if(envelopeOpened)return;
+  envelopeOpened=true;
+  envelopeWrap.classList.add('opening');
+  setTimeout(()=>{nameForm.classList.add('visible');document.getElementById('nameInput').focus()},1200);
+});
+
+// LANDING
+const nameInput=document.getElementById('nameInput');
+const submitBtn=document.getElementById('submitBtn');
+nameInput.addEventListener('input',()=>{submitBtn.disabled=nameInput.value.trim().length===0});
+nameInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&nameInput.value.trim().length>0)launchValentine()});
+submitBtn.addEventListener('click',launchValentine);
+
+// MUSIC - Web Audio API romantic melody
+let audioCtx,musicPlaying=false,musicInterval;
+function initMusic(){
+  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  const notes=[
+    {f:523.25,d:.6},{f:659.25,d:.6},{f:783.99,d:.8},{f:659.25,d:.4},
+    {f:587.33,d:.6},{f:698.46,d:.6},{f:783.99,d:.8},{f:523.25,d:.4},
+    {f:493.88,d:.6},{f:587.33,d:.6},{f:659.25,d:.8},{f:523.25,d:.4},
+    {f:440,d:.6},{f:523.25,d:.6},{f:587.33,d:.8},{f:493.88,d:.6},
+    {f:523.25,d:.6},{f:659.25,d:.8},{f:783.99,d:.6},{f:698.46,d:.4},
+    {f:659.25,d:.6},{f:587.33,d:.6},{f:523.25,d:1}
+  ];
+  let noteIdx=0;
+  function playNote(){
+    if(!musicPlaying)return;
+    const n=notes[noteIdx%notes.length];
+    const osc=audioCtx.createOscillator();
+    const gain=audioCtx.createGain();
+    osc.type='sine';
+    osc.frequency.value=n.f;
+    gain.gain.setValueAtTime(.08,audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+n.d*.9);
+    // Add soft harmonic
+    const osc2=audioCtx.createOscillator();
+    const gain2=audioCtx.createGain();
+    osc2.type='triangle';
+    osc2.frequency.value=n.f*2;
+    gain2.gain.setValueAtTime(.02,audioCtx.currentTime);
+    gain2.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+n.d*.7);
+    osc.connect(gain);gain.connect(audioCtx.destination);
+    osc2.connect(gain2);gain2.connect(audioCtx.destination);
+    osc.start();osc2.start();
+    osc.stop(audioCtx.currentTime+n.d);
+    osc2.stop(audioCtx.currentTime+n.d);
+    noteIdx++;
+    musicInterval=setTimeout(playNote,n.d*1000);
+  }
+  musicPlaying=true;
+  playNote();
+}
+const musicBtn=document.getElementById('musicBtn');
+musicBtn.addEventListener('click',()=>{
+  if(!musicPlaying){
+    if(!audioCtx)initMusic();
+    else{musicPlaying=true;initMusic();}
+    musicBtn.classList.remove('muted');
+  }else{
+    musicPlaying=false;
+    clearTimeout(musicInterval);
+    musicBtn.classList.add('muted');
+  }
+});
+
+// TYPEWRITER
+const poemLines=[
+  "Ni printemps ni été ne lui donnent la vie,",
+  "Ni pluie ni soleil ne guident son chemin,",
+  "L'amour pousse en silence, fragile et infini,",
+  "Dans le jardin secret de deux cœurs qui se tiennent la main.",
+  "",
+  "Il fleurit dans les larmes comme dans les sourires,",
+  "Il grandit dans la nuit quand tout semble s'éteindre,",
+  "Il n'a besoin de rien, sinon d'un seul désir :",
+  "Celui de deux âmes qui refusent de se perdre.",
+  "",
+  "Pas de racines dans la terre, mais au creux de nos veines,",
+  "Pas de feuilles au vent, mais des mots murmurés,",
+  "L'amour est cette fleur qui ignore les saisons,",
+  "Car il naît de la seule et plus belle des raisons :",
+  "",
+  "Toi."
+];
+let twObserver;
+function startTypewriter(){
+  const el=document.getElementById('poemText');
+  const sig=document.getElementById('poemSignature');
+  el.innerHTML='';
+  const fullText=poemLines.join('\n');
+  let i=0;
+  const cursor=document.createElement('span');
+  cursor.className='tw-cursor';
+  el.appendChild(cursor);
+  function typeChar(){
+    if(i>=fullText.length){
+      cursor.remove();
+      sig.style.transition='opacity 1s ease';
+      sig.style.opacity='1';
+      return;
+    }
+    const ch=fullText[i];
+    if(ch==='\n'){
+      el.insertBefore(document.createElement('br'),cursor);
+    }else{
+      const span=document.createElement('span');
+      span.className='tw-char';
+      span.textContent=ch;
+      span.style.animationDelay='0s';
+      el.insertBefore(span,cursor);
+    }
+    i++;
+    const isLast=poemLines[poemLines.length-1]==='Toi.'&&i>fullText.length-5;
+    setTimeout(typeChar,ch===','?80:ch==='.'?120:ch==='\n'?300:isLast?100:35);
+  }
+  typeChar();
+}
+// Use IntersectionObserver to trigger typewriter when poem scrolls into view
+function setupTypewriterObserver(){
+  const target=document.getElementById('poemSection');
+  if(!target)return;
+  twObserver=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        startTypewriter();
+        twObserver.disconnect();
+      }
+    });
+  },{threshold:0.3});
+  twObserver.observe(target);
+}
+
+// CONFETTI CANNON
+document.getElementById('confettiBtn').addEventListener('click',function(e){
+  e.stopPropagation();
+  const colors=['#ff4d6d','#ff8fa3','#ffb3c1','#f0d060','#ffd6e0','#e6003a','#d4a017','#fff','#ff6b8a'];
+  const shapes=['●','♥','★','✦','♦'];
+  for(let i=0;i<80;i++){
+    const p=document.createElement('div');
+    p.className='confetti-piece';
+    p.textContent=shapes[Math.floor(Math.random()*shapes.length)];
+    const startX=Math.random()*window.innerWidth;
+    p.style.cssText='position:fixed;left:'+startX+'px;top:-20px;font-size:'+(8+Math.random()*16)+'px;color:'+colors[Math.floor(Math.random()*colors.length)]+';--cx:'+((Math.random()-.5)*200)+'px;--cy:'+(window.innerHeight+50)+'px;--cr:'+(Math.random()*1080-540)+'deg;--cfall:'+(2+Math.random()*3)+'s;pointer-events:none;z-index:999;animation:confettiFall var(--cfall) ease-out forwards;animation-delay:'+(Math.random()*.5)+'s;opacity:0';
+    // Fix: need opacity 1 at start of animation
+    setTimeout(()=>{p.style.opacity='1'},10);
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),6000);
+  }
+});
+
+function launchValentine(){
+  const name=nameInput.value.trim();if(!name)return;
+  const lp=document.getElementById('landingPage');
+  lp.style.transition='opacity .8s ease,transform .8s ease';
+  lp.style.opacity='0';lp.style.transform='scale(.95) translateY(-30px)';
+  setTimeout(()=>{
+    lp.style.display='none';
+    document.getElementById('mainPage').classList.add('active');
+    renderBubbles(name);
+    startMainAnimations();
+    setupTypewriterObserver();
+    // Auto-start music
+    if(!musicPlaying)initMusic();
+  },800);
+}
+
+function startMainAnimations(){
+  const emojis=['❤️','💕','💗','💖','💝','💓','💘','🩷','♥️'];
+  const hc=document.getElementById('heartsContainer');
+  function mkHeart(){const h=document.createElement('div');h.className='floating-heart';h.textContent=emojis[Math.floor(Math.random()*emojis.length)];h.style.left=Math.random()*100+'%';h.style.fontSize=(Math.random()*30+15)+'px';h.style.animationDuration=(Math.random()*8+7)+'s';h.style.animationDelay=(Math.random()*2)+'s';hc.appendChild(h);setTimeout(()=>h.remove(),16000)}
+  for(let i=0;i<15;i++)setTimeout(mkHeart,i*400);setInterval(mkHeart,800);
+  const sp=document.getElementById('sparkles');for(let i=0;i<40;i++){const s=document.createElement('div');s.className='sparkle';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*3+'s';s.style.width=s.style.height=(Math.random()*4+2)+'px';sp.appendChild(s)}
+  const pc=document.getElementById('petalsContainer');
+  function mkPetal(){const p=document.createElement('div');p.className='petal';p.style.left=Math.random()*100+'%';p.style.animationDuration=(Math.random()*4+4)+'s';p.style.animationDelay=Math.random()*5+'s';p.style.background='hsl('+(340+Math.random()*20)+',80%,'+(60+Math.random()*20)+'%)';p.style.width=(10+Math.random()*10)+'px';p.style.height=(8+Math.random()*8)+'px';pc.appendChild(p);setTimeout(()=>p.remove(),10000)}
+  for(let i=0;i<8;i++)setTimeout(mkPetal,i*600);setInterval(mkPetal,1200);
+  document.addEventListener('click',e=>{for(let i=0;i<5;i++){const h=document.createElement('div');h.className='click-heart';h.textContent=emojis[Math.floor(Math.random()*emojis.length)];h.style.left=(e.clientX+(Math.random()-.5)*60)+'px';h.style.top=(e.clientY+(Math.random()-.5)*60)+'px';h.style.fontSize=(Math.random()*20+15)+'px';document.body.appendChild(h);setTimeout(()=>h.remove(),1500)}});
+  document.getElementById('megaHeart').addEventListener('click',e=>{e.stopPropagation();for(let i=0;i<20;i++){const h=document.createElement('div');h.className='click-heart';h.textContent=emojis[Math.floor(Math.random()*emojis.length)];const a=(Math.PI*2/20)*i;const d=Math.random()*150+80;h.style.left=(e.clientX+Math.cos(a)*d)+'px';h.style.top=(e.clientY+Math.sin(a)*d)+'px';h.style.fontSize=(Math.random()*25+20)+'px';document.body.appendChild(h);setTimeout(()=>h.remove(),1500)}});
+  let lt=0;document.addEventListener('mousemove',e=>{const n=Date.now();if(n-lt<100)return;lt=n;const t=document.createElement('div');t.style.cssText='position:fixed;left:'+e.clientX+'px;top:'+e.clientY+'px;width:6px;height:6px;background:var(--rose-soft);border-radius:50%;pointer-events:none;z-index:999;opacity:.6;transition:all .8s ease-out';document.body.appendChild(t);requestAnimationFrame(()=>{t.style.opacity='0';t.style.transform='scale(3)'});setTimeout(()=>t.remove(),800)});
+}
+
+// Landing hearts
+(function(){const lp=document.getElementById('landingPetals');const em=['❤️','💕','💗','💖','🩷'];function a(){const h=document.createElement('div');h.className='floating-heart';h.textContent=em[Math.floor(Math.random()*em.length)];h.style.left=Math.random()*100+'%';h.style.fontSize=(Math.random()*25+12)+'px';h.style.animationDuration=(Math.random()*8+7)+'s';h.style.animationDelay=(Math.random()*2)+'s';lp.appendChild(h);setTimeout(()=>h.remove(),16000)}for(let i=0;i<10;i++)setTimeout(a,i*500);setInterval(a,1000)})();
+</script>
+</body>
+</html>
