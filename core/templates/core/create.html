@@ -1,0 +1,320 @@
+{% load static %}<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crée ton Valentin</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--rose-deep:#b5002a;--rose-hot:#e6003a;--rose-soft:#ff4d6d;--rose-blush:#ff8fa3;--rose-light:#ffb3c1;--rose-pale:#ffd6e0;--cream:#fff0f3;--gold:#d4a017;--gold-light:#f0d060;--wine:#6b0020}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:radial-gradient(ellipse at 30% 20%,#2a0010 0%,#1a0008 40%,#0d0004 100%);min-height:100vh;font-family:'Lora',serif;color:var(--cream);overflow-x:hidden}
+.hearts-bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.floating-heart{position:absolute;bottom:-80px;animation:floatUp linear infinite;opacity:0;filter:blur(.5px)}
+@keyframes floatUp{0%{transform:translateY(0) rotate(0deg) scale(.5);opacity:0}10%{opacity:.5}90%{opacity:.2}100%{transform:translateY(-110vh) rotate(360deg) scale(1.2);opacity:0}}
+
+.container{position:relative;z-index:10;max-width:600px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.page-title{font-family:'Great Vibes',cursive;font-size:clamp(2.5rem,8vw,4.5rem);text-align:center;background:linear-gradient(135deg,var(--rose-light),var(--gold-light),var(--rose-blush));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
+.page-subtitle{font-family:'Playfair Display',serif;font-style:italic;color:var(--rose-blush);text-align:center;font-size:clamp(.9rem,2.5vw,1.1rem);margin-bottom:2.5rem;opacity:.8}
+
+.card{background:linear-gradient(135deg,rgba(181,0,42,.08),rgba(107,0,32,.15));border:1px solid rgba(255,77,109,.15);border-radius:20px;padding:1.5rem;margin-bottom:1.5rem;backdrop-filter:blur(10px);position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent,rgba(255,77,109,.03),transparent,rgba(212,160,23,.02),transparent);animation:rotateBg 15s linear infinite;pointer-events:none}
+@keyframes rotateBg{to{transform:rotate(360deg)}}
+.card-label{font-family:'Playfair Display',serif;font-size:1rem;color:var(--rose-pale);margin-bottom:.8rem;position:relative;z-index:2;letter-spacing:.5px}
+
+.text-input{width:100%;padding:.9rem 1.2rem;font-family:'Great Vibes',cursive;font-size:1.6rem;text-align:center;background:rgba(255,77,109,.06);border:1.5px solid rgba(255,77,109,.25);border-radius:50px;color:var(--cream);outline:none;transition:all .3s ease;backdrop-filter:blur(6px)}
+.text-input::placeholder{color:rgba(255,179,193,.35);font-family:'Great Vibes',cursive}
+.text-input:focus{border-color:var(--rose-soft);box-shadow:0 0 25px rgba(230,0,58,.25)}
+
+/* Pill toggles */
+.toggle-row{display:flex;gap:.5rem;margin-bottom:1rem;position:relative;z-index:2}
+.toggle-pill{flex:1;padding:.7rem 1rem;font-family:'Playfair Display',serif;font-size:.85rem;text-align:center;border:1.5px solid rgba(255,77,109,.25);border-radius:50px;background:transparent;color:var(--rose-pale);cursor:pointer;transition:all .3s ease;letter-spacing:.5px}
+.toggle-pill:hover{border-color:var(--rose-soft);background:rgba(255,77,109,.08)}
+.toggle-pill.active{background:linear-gradient(135deg,var(--rose-hot),var(--rose-deep));color:#fff;border-color:var(--rose-hot);box-shadow:0 4px 20px rgba(230,0,58,.3)}
+
+/* Custom acrostic inputs */
+.acrostic-inputs{position:relative;z-index:2;display:none;margin-top:1rem}
+.acrostic-inputs.show{display:block}
+.acrostic-row{display:flex;align-items:center;gap:.8rem;margin-bottom:.6rem}
+.acrostic-letter{font-family:'Great Vibes',cursive;font-size:2rem;color:var(--gold);min-width:35px;text-align:center;text-shadow:0 0 12px rgba(212,160,23,.4)}
+.acrostic-phrase-input{flex:1;padding:.6rem 1rem;font-family:'Lora',serif;font-size:.9rem;background:rgba(255,77,109,.05);border:1px solid rgba(255,77,109,.2);border-radius:12px;color:var(--cream);outline:none;transition:all .3s ease}
+.acrostic-phrase-input::placeholder{color:rgba(255,179,193,.3)}
+.acrostic-phrase-input:focus{border-color:var(--rose-soft);box-shadow:0 0 15px rgba(230,0,58,.15)}
+
+/* Custom poem */
+.poem-textarea{display:none;width:100%;min-height:150px;padding:1rem;font-family:'Lora',serif;font-size:1rem;line-height:1.8;background:rgba(255,77,109,.05);border:1px solid rgba(255,77,109,.2);border-radius:16px;color:var(--cream);outline:none;resize:vertical;transition:all .3s ease;position:relative;z-index:2}
+.poem-textarea.show{display:block;margin-top:1rem}
+.poem-textarea::placeholder{color:rgba(255,179,193,.3)}
+.poem-textarea:focus{border-color:var(--rose-soft);box-shadow:0 0 15px rgba(230,0,58,.15)}
+
+/* YouTube input */
+.youtube-input-wrap{display:none;margin-top:1rem;position:relative;z-index:2}
+.youtube-input-wrap.show{display:block}
+.youtube-input{width:100%;padding:.8rem 1rem;font-family:'Lora',serif;font-size:.95rem;background:rgba(255,77,109,.05);border:1px solid rgba(255,77,109,.2);border-radius:12px;color:var(--cream);outline:none;transition:all .3s ease}
+.youtube-input::placeholder{color:rgba(255,179,193,.3)}
+.youtube-input:focus{border-color:var(--rose-soft);box-shadow:0 0 15px rgba(230,0,58,.15)}
+.yt-status{font-size:.8rem;margin-top:.5rem;min-height:1.2rem;font-family:'Lora',serif}
+.yt-status.valid{color:#4caf50}.yt-status.invalid{color:var(--rose-soft)}
+
+/* Send button */
+.send-btn{display:block;width:100%;padding:1.1rem;font-family:'Playfair Display',serif;font-size:1.15rem;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,var(--rose-hot),var(--rose-deep));color:#fff;border:none;border-radius:50px;cursor:pointer;transition:all .4s ease;position:relative;overflow:hidden;margin-top:.5rem}
+.send-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .6s ease}
+.send-btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 15px 40px rgba(230,0,58,.4)}
+.send-btn:hover::before{left:100%}
+.send-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* Error message */
+.error-msg{color:var(--rose-soft);font-size:.9rem;text-align:center;margin-top:.8rem;min-height:1.3rem;font-family:'Lora',serif}
+
+/* Share modal */
+.share-overlay{display:none;position:fixed;inset:0;background:rgba(13,0,4,.85);z-index:1000;justify-content:center;align-items:center;padding:2rem;backdrop-filter:blur(8px)}
+.share-overlay.show{display:flex}
+.share-modal{background:linear-gradient(135deg,#1a0008,#2a0010);border:1px solid rgba(255,77,109,.3);border-radius:25px;padding:2.5rem 2rem;max-width:500px;width:100%;text-align:center;position:relative}
+.share-title{font-family:'Great Vibes',cursive;font-size:2.5rem;color:var(--rose-light);margin-bottom:.5rem}
+.share-subtitle{font-family:'Playfair Display',serif;font-style:italic;color:var(--rose-blush);font-size:1rem;margin-bottom:2rem;opacity:.8}
+.share-link-box{display:flex;gap:.5rem;margin-bottom:1.5rem}
+.share-link-input{flex:1;padding:.8rem 1rem;font-family:'Lora',serif;font-size:.85rem;background:rgba(255,77,109,.06);border:1px solid rgba(255,77,109,.25);border-radius:12px;color:var(--cream);outline:none;text-overflow:ellipsis}
+.copy-btn{padding:.8rem 1.2rem;font-family:'Playfair Display',serif;font-size:.85rem;background:linear-gradient(135deg,var(--gold),#e6b800);color:#1a0008;border:none;border-radius:12px;cursor:pointer;font-weight:bold;transition:all .3s ease;white-space:nowrap}
+.copy-btn:hover{transform:scale(1.05);box-shadow:0 4px 15px rgba(212,160,23,.4)}
+.share-buttons{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
+.share-btn{padding:.8rem 1.5rem;font-family:'Playfair Display',serif;font-size:.9rem;border:none;border-radius:50px;cursor:pointer;transition:all .3s ease;font-weight:bold;text-decoration:none;display:inline-block}
+.share-btn:hover{transform:translateY(-2px)}
+.share-btn.whatsapp{background:#25d366;color:#fff}
+.share-btn.sms{background:var(--rose-soft);color:#fff}
+.share-btn-new{display:inline-block;margin-top:.5rem;font-family:'Playfair Display',serif;font-size:.9rem;color:var(--rose-blush);cursor:pointer;border:none;background:none;text-decoration:underline;transition:color .3s}
+.share-btn-new:hover{color:var(--cream)}
+
+@media(max-width:480px){.container{padding:1.5rem 1rem 3rem}.card{padding:1.2rem}.text-input{font-size:1.3rem;padding:.7rem 1rem}}
+</style>
+</head>
+<body>
+
+<div class="hearts-bg" id="heartsBg"></div>
+
+<div class="container">
+  <h1 class="page-title">Crée ton Valentin</h1>
+  <p class="page-subtitle">Envoie un message d'amour unique à ton crush</p>
+
+  <!-- Sender name -->
+  <div class="card">
+    <div class="card-label">Ton prénom</div>
+    <input type="text" class="text-input" id="senderName" placeholder="Ton prénom..." maxlength="50" autocomplete="off">
+  </div>
+
+  <!-- Recipient name -->
+  <div class="card">
+    <div class="card-label">Le prénom de ton crush</div>
+    <input type="text" class="text-input" id="recipientName" placeholder="Son prénom..." maxlength="50" autocomplete="off">
+  </div>
+
+  <!-- Acrostic -->
+  <div class="card">
+    <div class="card-label">Acrostiche</div>
+    <div class="toggle-row">
+      <button class="toggle-pill active" data-target="acrostic" data-value="default">Automatique</button>
+      <button class="toggle-pill" data-target="acrostic" data-value="custom">Personnalisé</button>
+    </div>
+    <div class="acrostic-inputs" id="acrosticInputs"></div>
+  </div>
+
+  <!-- Poem -->
+  <div class="card">
+    <div class="card-label">Poème</div>
+    <div class="toggle-row">
+      <button class="toggle-pill active" data-target="poem" data-value="default">Poème classique</button>
+      <button class="toggle-pill" data-target="poem" data-value="custom">Mon propre message</button>
+    </div>
+    <textarea class="poem-textarea" id="poemTextarea" placeholder="Écris ton message d'amour..." maxlength="2000"></textarea>
+  </div>
+
+  <!-- Music -->
+  <div class="card">
+    <div class="card-label">Musique</div>
+    <div class="toggle-row">
+      <button class="toggle-pill active" data-target="music" data-value="default">Mélodie par défaut</button>
+      <button class="toggle-pill" data-target="music" data-value="youtube">Chanson YouTube</button>
+    </div>
+    <div class="youtube-input-wrap" id="youtubeWrap">
+      <input type="text" class="youtube-input" id="youtubeUrl" placeholder="Colle le lien YouTube ici..." autocomplete="off">
+      <div class="yt-status" id="ytStatus"></div>
+    </div>
+  </div>
+
+  <!-- Send -->
+  <button class="send-btn" id="sendBtn" disabled>Envoyer</button>
+  <div class="error-msg" id="errorMsg"></div>
+</div>
+
+<!-- Share modal -->
+<div class="share-overlay" id="shareOverlay">
+  <div class="share-modal">
+    <h2 class="share-title">C'est envoyé !</h2>
+    <p class="share-subtitle">Partage ce lien avec ton crush</p>
+    <div class="share-link-box">
+      <input type="text" class="share-link-input" id="shareLink" readonly>
+      <button class="copy-btn" id="copyBtn">Copier</button>
+    </div>
+    <div class="share-buttons">
+      <a class="share-btn whatsapp" id="whatsappBtn" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="share-btn sms" id="smsBtn">SMS</a>
+    </div>
+    <button class="share-btn-new" id="newBtn">Créer un autre valentin</button>
+  </div>
+</div>
+
+<script>
+// State
+let acrosticMode='default', poemMode='default', musicMode='default';
+
+// Toggle pills
+document.querySelectorAll('.toggle-pill').forEach(pill=>{
+  pill.addEventListener('click',()=>{
+    const target=pill.dataset.target;
+    const value=pill.dataset.value;
+    pill.parentElement.querySelectorAll('.toggle-pill').forEach(p=>p.classList.remove('active'));
+    pill.classList.add('active');
+    if(target==='acrostic'){acrosticMode=value;document.getElementById('acrosticInputs').classList.toggle('show',value==='custom');buildAcrosticInputs()}
+    if(target==='poem'){poemMode=value;document.getElementById('poemTextarea').classList.toggle('show',value==='custom')}
+    if(target==='music'){musicMode=value;document.getElementById('youtubeWrap').classList.toggle('show',value==='youtube')}
+    updateSendBtn();
+  });
+});
+
+// Build acrostic inputs when recipient name changes
+const recipientInput=document.getElementById('recipientName');
+recipientInput.addEventListener('input',()=>{buildAcrosticInputs();updateSendBtn()});
+document.getElementById('senderName').addEventListener('input',updateSendBtn);
+
+function buildAcrosticInputs(){
+  const container=document.getElementById('acrosticInputs');
+  const name=recipientInput.value.trim();
+  if(acrosticMode!=='custom'||!name){container.innerHTML='';return}
+  const letters=name.toUpperCase().split('');
+  container.innerHTML=letters.map((l,i)=>`
+    <div class="acrostic-row">
+      <span class="acrostic-letter">${l}</span>
+      <input type="text" class="acrostic-phrase-input" data-index="${i}" placeholder="Phrase commençant par ${l}..." maxlength="200">
+    </div>
+  `).join('');
+  container.querySelectorAll('.acrostic-phrase-input').forEach(inp=>inp.addEventListener('input',updateSendBtn));
+}
+
+// YouTube validation
+const ytInput=document.getElementById('youtubeUrl');
+const ytStatus=document.getElementById('ytStatus');
+ytInput.addEventListener('input',()=>{
+  const url=ytInput.value.trim();
+  if(!url){ytStatus.textContent='';ytStatus.className='yt-status';updateSendBtn();return}
+  const match=url.match(/(?:youtube\.com\/watch\?.*v=|youtu\.be\/|youtube\.com\/embed\/|music\.youtube\.com\/watch\?.*v=)([a-zA-Z0-9_-]{11})/);
+  if(match){ytStatus.textContent='Lien valide';ytStatus.className='yt-status valid'}
+  else{ytStatus.textContent='Lien YouTube invalide';ytStatus.className='yt-status invalid'}
+  updateSendBtn();
+});
+
+function updateSendBtn(){
+  const sender=document.getElementById('senderName').value.trim();
+  const recipient=recipientInput.value.trim();
+  let ok=sender.length>0&&recipient.length>0;
+
+  if(acrosticMode==='custom'&&recipient){
+    const inputs=document.querySelectorAll('.acrostic-phrase-input');
+    if(inputs.length!==recipient.length)ok=false;
+    inputs.forEach(inp=>{if(!inp.value.trim())ok=false});
+  }
+  if(poemMode==='custom'&&!document.getElementById('poemTextarea').value.trim())ok=false;
+  if(musicMode==='youtube'){
+    const url=ytInput.value.trim();
+    if(!url||!url.match(/(?:youtube\.com\/watch\?.*v=|youtu\.be\/|youtube\.com\/embed\/|music\.youtube\.com\/watch\?.*v=)([a-zA-Z0-9_-]{11})/))ok=false;
+  }
+  document.getElementById('sendBtn').disabled=!ok;
+}
+
+// Send
+document.getElementById('sendBtn').addEventListener('click',async()=>{
+  const btn=document.getElementById('sendBtn');
+  const errEl=document.getElementById('errorMsg');
+  btn.disabled=true;errEl.textContent='';
+
+  const senderName=document.getElementById('senderName').value.trim();
+  const recipientName=recipientInput.value.trim();
+
+  let customAcrostic=null;
+  if(acrosticMode==='custom'){
+    customAcrostic=[];
+    document.querySelectorAll('.acrostic-phrase-input').forEach((inp,i)=>{
+      customAcrostic.push({letter:recipientName[i].toUpperCase(),phrase:inp.value.trim()});
+    });
+  }
+
+  const body={
+    senderName,recipientName,
+    acrosticMode,
+    customAcrostic,
+    poemMode,
+    customPoem:poemMode==='custom'?document.getElementById('poemTextarea').value.trim():null,
+    musicMode,
+    youtubeUrl:musicMode==='youtube'?ytInput.value.trim():null
+  };
+
+  try{
+    const res=await fetch('/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify(body)});
+    const data=await res.json();
+    if(!res.ok){errEl.textContent=data.error||'Erreur inconnue';btn.disabled=false;return}
+    showShareModal(data.url);
+  }catch(e){errEl.textContent='Erreur réseau. Réessaie.';btn.disabled=false}
+});
+
+function showShareModal(url){
+  const fullUrl=window.location.origin+url;
+  document.getElementById('shareLink').value=fullUrl;
+  const msg=encodeURIComponent('Je t\'ai préparé quelque chose de spécial... '+fullUrl);
+  document.getElementById('whatsappBtn').href='https://wa.me/?text='+msg;
+  document.getElementById('smsBtn').href='sms:?body='+msg;
+  document.getElementById('shareOverlay').classList.add('show');
+}
+
+document.getElementById('copyBtn').addEventListener('click',()=>{
+  const input=document.getElementById('shareLink');
+  navigator.clipboard.writeText(input.value).then(()=>{
+    document.getElementById('copyBtn').textContent='Copié !';
+    setTimeout(()=>document.getElementById('copyBtn').textContent='Copier',2000);
+  });
+});
+
+document.getElementById('newBtn').addEventListener('click',()=>{
+  document.getElementById('shareOverlay').classList.remove('show');
+  document.getElementById('senderName').value='';
+  recipientInput.value='';
+  document.getElementById('poemTextarea').value='';
+  ytInput.value='';ytStatus.textContent='';
+  document.getElementById('acrosticInputs').innerHTML='';
+  document.querySelectorAll('.toggle-pill[data-value="default"]').forEach(p=>{
+    p.click();
+  });
+  updateSendBtn();
+});
+
+function getCookie(name){
+  const v=document.cookie.match('(^|;)\\s*'+name+'\\s*=\\s*([^;]+)');
+  return v?v.pop():'';
+}
+
+// Background hearts
+(function(){
+  const bg=document.getElementById('heartsBg');
+  const em=['❤️','💕','💗','💖','🩷'];
+  function mk(){
+    const h=document.createElement('div');h.className='floating-heart';
+    h.textContent=em[Math.floor(Math.random()*em.length)];
+    h.style.left=Math.random()*100+'%';
+    h.style.fontSize=(Math.random()*20+12)+'px';
+    h.style.animationDuration=(Math.random()*8+8)+'s';
+    h.style.animationDelay=(Math.random()*2)+'s';
+    bg.appendChild(h);setTimeout(()=>h.remove(),17000);
+  }
+  for(let i=0;i<8;i++)setTimeout(mk,i*600);
+  setInterval(mk,1200);
+})();
+</script>
+</body>
+</html>
