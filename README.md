@@ -1,6 +1,6 @@
 # valentine
 
-A small, self-contained HTML Valentine's Day card — animated, responsive, and written in pure HTML + CSS (no build step, no dependencies).
+A small, self-contained HTML Valentine's Day card - animated, responsive, and written in pure HTML + CSS (no build step, no dependencies).
 
 💕 A little love letter in code. 💕
 
@@ -35,7 +35,7 @@ open valentine.html       # macOS
 start valentine.html      # Windows
 ```
 
-No build step, no install — it's just HTML, CSS and a bit of inline JavaScript.
+No build step, no install - it's just HTML, CSS and a bit of inline JavaScript.
 
 ## Customization
 
@@ -45,7 +45,7 @@ No build step, no install — it's just HTML, CSS and a bit of inline JavaScript
 
 ## Contributing
 
-Pull requests welcome — new card variants, accessibility improvements, English translations, or lighter alternatives that work offline (without the Google Fonts dependency) are all appreciated.
+Pull requests welcome - new card variants, accessibility improvements, English translations, or lighter alternatives that work offline (without the Google Fonts dependency) are all appreciated.
 
 ## License
 
